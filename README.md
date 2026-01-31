@@ -6,7 +6,6 @@ AI Agent Server with Web UI, Scheduler, and Claude Code Integration.
 
 - [Bun](https://bun.sh) runtime (required)
 - Node.js 18+ (for npx)
-- Anthropic API key (set as `ANTHROPIC_API_KEY` environment variable)
 
 ## Installation
 
@@ -67,13 +66,6 @@ All data is stored in `~/.valley/`:
 └── .claude/
     └── skills/        # Custom skills
 ```
-
-## Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `ANTHROPIC_API_KEY` | Anthropic API key | Required |
-| `VALLEY_AGENT_PORT` | Server port | 3000 |
 
 ## License
 

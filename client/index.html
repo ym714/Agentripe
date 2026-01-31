@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valley Agent</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #16213e;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #0f3460;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      color: #e94560;
+    }
+
+    .header-tabs {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .header-tab {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid #0f3460;
+      border-radius: 6px;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .header-tab:hover {
+      border-color: #e94560;
+      color: #eee;
+    }
+
+    .header-tab.active {
+      background: #e94560;
+      border-color: #e94560;
+      color: #fff;
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 280px;
+      background: #16213e;
+      border-right: 1px solid #0f3460;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .sidebar h2 {
+      font-size: 0.875rem;
+      color: #888;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .session-list {
+      list-style: none;
+    }
+
+    .session-item {
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      background: #1a1a2e;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .session-item:hover {
+      background: #0f3460;
+    }
+
+    .session-item.active {
+      background: #e94560;
+    }
+
+    .session-item .session-id {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .session-item .session-meta {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 0.25rem;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 1rem 2rem;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      max-width: 80%;
+    }
+
+    .message.user {
+      background: #0f3460;
+      margin-left: auto;
+    }
+
+    .message.assistant {
+      background: #16213e;
+    }
+
+    .message.tool {
+      background: #1a1a2e;
+      border: 1px solid #0f3460;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.875rem;
+    }
+
+    .message.error {
+      background: #3d0000;
+      border: 1px solid #e94560;
+    }
+
+    .message.result {
+      background: #003d00;
+      border: 1px solid #00ff00;
+    }
+
+    .message .label {
+      font-size: 0.75rem;
+      color: #888;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .message pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+    }
+
+    .input-area {
+      padding: 1rem 2rem;
+      background: #16213e;
+      border-top: 1px solid #0f3460;
+    }
+
+    .input-wrapper {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .input-wrapper textarea {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid #0f3460;
+      border-radius: 8px;
+      background: #1a1a2e;
+      color: #eee;
+      font-size: 1rem;
+      resize: none;
+      min-height: 60px;
+    }
+
+    .input-wrapper textarea:focus {
+      outline: none;
+      border-color: #e94560;
+    }
+
+    .input-wrapper button,
+    .btn {
+      padding: 0.75rem 1.5rem;
+      background: #e94560;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .input-wrapper button:hover,
+    .btn:hover {
+      background: #c73e54;
+    }
+
+    .input-wrapper button:disabled,
+    .btn:disabled {
+      background: #444;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: #0f3460;
+    }
+
+    .btn-secondary:hover {
+      background: #1a4a7a;
+    }
+
+    .btn-danger {
+      background: #8b0000;
+    }
+
+    .btn-danger:hover {
+      background: #a00000;
+    }
+
+    .new-session-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: #e94560;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+
+    .new-session-btn:hover {
+      background: #c73e54;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #888;
+    }
+
+    .status-dot.connected {
+      background: #00ff00;
+    }
+
+    .status-dot.processing {
+      background: #ffff00;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: #888;
+    }
+
+    .empty-state h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Settings Page Styles */
+    .settings-page {
+      display: none;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .settings-page.active {
+      display: flex;
+    }
+
+    .chat-page {
+      display: none;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .chat-page.active {
+      display: flex;
+    }
+
+    .settings-sidebar {
+      width: 280px;
+      background: #16213e;
+      border-right: 1px solid #0f3460;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+
+    .settings-nav {
+      list-style: none;
+    }
+
+    .settings-nav-item {
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+      background: #1a1a2e;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .settings-nav-item:hover {
+      background: #0f3460;
+    }
+
+    .settings-nav-item.active {
+      background: #e94560;
+    }
+
+    .settings-content {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .settings-section {
+      display: none;
+    }
+
+    .settings-section.active {
+      display: block;
+    }
+
+    .settings-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #e94560;
+    }
+
+    .settings-section p {
+      color: #888;
+      margin-bottom: 1.5rem;
+    }
+
+    .editor-container {
+      margin-bottom: 1rem;
+    }
+
+    .editor-container label {
+      display: block;
+      font-size: 0.875rem;
+      color: #888;
+      margin-bottom: 0.5rem;
+    }
+
+    .editor-container textarea {
+      width: 100%;
+      min-height: 400px;
+      padding: 1rem;
+      border: 1px solid #0f3460;
+      border-radius: 8px;
+      background: #1a1a2e;
+      color: #eee;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.875rem;
+      resize: vertical;
+    }
+
+    .editor-container textarea:focus {
+      outline: none;
+      border-color: #e94560;
+    }
+
+    .editor-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .skills-list {
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      background: #1a1a2e;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-item .skill-name {
+      font-weight: 500;
+    }
+
+    .skill-item .skill-meta {
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    .skill-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .skill-actions button {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #16213e;
+      border-radius: 12px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-header h3 {
+      font-size: 1.25rem;
+      color: #e94560;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: #eee;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      color: #888;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #0f3460;
+      border-radius: 8px;
+      background: #1a1a2e;
+      color: #eee;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #e94560;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      background: #16213e;
+      border: 1px solid #0f3460;
+      border-radius: 8px;
+      color: #eee;
+      z-index: 2000;
+      display: none;
+    }
+
+    .toast.success {
+      border-color: #00ff00;
+    }
+
+    .toast.error {
+      border-color: #e94560;
+    }
+
+    .toast.active {
+      display: block;
+    }
+
+    /* Scheduler Styles */
+    .scheduler-list {
+      margin-bottom: 1.5rem;
+    }
+
+    .scheduler-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      background: #1a1a2e;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .scheduler-item.disabled {
+      opacity: 0.6;
+    }
+
+    .scheduler-item .scheduler-info {
+      flex: 1;
+    }
+
+    .scheduler-item .scheduler-name {
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .scheduler-item .scheduler-status {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00ff00;
+    }
+
+    .scheduler-item .scheduler-status.disabled {
+      background: #888;
+    }
+
+    .scheduler-item .scheduler-meta {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 0.25rem;
+    }
+
+    .scheduler-item .scheduler-prompt {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-top: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 400px;
+    }
+
+    .scheduler-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .scheduler-actions button {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    .btn-success {
+      background: #006400;
+    }
+
+    .btn-success:hover {
+      background: #008000;
+    }
+
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #0f3460;
+      border-radius: 8px;
+      background: #1a1a2e;
+      color: #eee;
+      font-size: 1rem;
+    }
+
+    .form-group select:focus {
+      outline: none;
+      border-color: #e94560;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #444;
+      transition: 0.3s;
+      border-radius: 26px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #eee;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: #e94560;
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(24px);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Valley Agent</h1>
+    <div class="header-tabs">
+      <button class="header-tab active" data-tab="chat">Chat</button>
+      <button class="header-tab" data-tab="settings">Settings</button>
+    </div>
+  </header>
+
+  <!-- Chat Page -->
+  <div class="chat-page active" id="chatPage">
+    <aside class="sidebar">
+      <div class="status">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Disconnected</span>
+      </div>
+
+      <button class="new-session-btn" id="newSessionBtn">+ New Session</button>
+
+      <h2>Sessions</h2>
+      <ul class="session-list" id="sessionList"></ul>
+    </aside>
+
+    <main class="main">
+      <div class="messages" id="messages">
+        <div class="empty-state">
+          <h2>Welcome to Valley Agent</h2>
+          <p>Start a new session or select an existing one</p>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="input-wrapper">
+          <textarea
+            id="messageInput"
+            placeholder="Type your message..."
+            rows="2"
+          ></textarea>
+          <button id="sendBtn" disabled>Send</button>
+          <button id="stopBtn" class="btn btn-danger" style="display: none;">Stop</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Settings Page -->
+  <div class="settings-page" id="settingsPage">
+    <aside class="settings-sidebar">
+      <h2>Settings</h2>
+      <ul class="settings-nav">
+        <li class="settings-nav-item active" data-section="claude-md">CLAUDE.md</li>
+        <li class="settings-nav-item" data-section="skills">Skills</li>
+        <li class="settings-nav-item" data-section="scheduler">Scheduler</li>
+      </ul>
+    </aside>
+
+    <div class="settings-content">
+      <!-- CLAUDE.md Section -->
+      <section class="settings-section active" id="claudeMdSection">
+        <h2>CLAUDE.md</h2>
+        <p>Configure the agent's instructions and behavior by editing the CLAUDE.md file.</p>
+
+        <div class="editor-container">
+          <label for="claudeMdEditor">Content</label>
+          <textarea id="claudeMdEditor" placeholder="Loading..."></textarea>
+        </div>
+
+        <div class="editor-actions">
+          <button class="btn" id="saveClaudeMdBtn">Save Changes</button>
+          <button class="btn btn-secondary" id="reloadClaudeMdBtn">Reload</button>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section class="settings-section" id="skillsSection">
+        <h2>Skills</h2>
+        <p>Manage custom skills that extend the agent's capabilities.</p>
+
+        <button class="btn" id="newSkillBtn" style="margin-bottom: 1.5rem;">+ New Skill</button>
+
+        <div class="skills-list" id="skillsList">
+          <!-- Skills will be loaded here -->
+        </div>
+      </section>
+
+      <!-- Scheduler Section -->
+      <section class="settings-section" id="schedulerSection">
+        <h2>Scheduler</h2>
+        <p>Create and manage scheduled tasks that run automatically at specified intervals.</p>
+
+        <button class="btn" id="newSchedulerBtn" style="margin-bottom: 1.5rem;">+ New Scheduled Task</button>
+
+        <div class="scheduler-list" id="schedulerList">
+          <!-- Scheduled tasks will be loaded here -->
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Skill Editor Modal -->
+  <div class="modal" id="skillModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="skillModalTitle">New Skill</h3>
+        <button class="modal-close" id="skillModalClose">&times;</button>
+      </div>
+
+      <div class="form-group">
+        <label for="skillNameInput">Skill Name</label>
+        <input type="text" id="skillNameInput" placeholder="my-skill">
+      </div>
+
+      <div class="editor-container">
+        <label for="skillContentEditor">Content</label>
+        <textarea id="skillContentEditor" style="min-height: 300px;" placeholder="Enter skill content..."></textarea>
+      </div>
+
+      <div class="editor-actions">
+        <button class="btn" id="saveSkillBtn">Save Skill</button>
+        <button class="btn btn-secondary" id="cancelSkillBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scheduler Editor Modal -->
+  <div class="modal" id="schedulerModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="schedulerModalTitle">New Scheduled Task</h3>
+        <button class="modal-close" id="schedulerModalClose">&times;</button>
+      </div>
+
+      <div class="form-group">
+        <label for="schedulerNameInput">Task Name</label>
+        <input type="text" id="schedulerNameInput" placeholder="My scheduled task">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="schedulerIntervalValue">Interval</label>
+          <input type="number" id="schedulerIntervalValue" placeholder="5" min="1" value="5">
+        </div>
+        <div class="form-group">
+          <label for="schedulerIntervalUnit">Unit</label>
+          <select id="schedulerIntervalUnit">
+            <option value="1000">Seconds</option>
+            <option value="60000" selected>Minutes</option>
+            <option value="3600000">Hours</option>
+            <option value="86400000">Days</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="schedulerEnabledInput">Enabled</label>
+        <label class="toggle-switch">
+          <input type="checkbox" id="schedulerEnabledInput" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="editor-container">
+        <label for="schedulerPromptEditor">Prompt</label>
+        <textarea id="schedulerPromptEditor" style="min-height: 200px;" placeholder="Enter the prompt to execute..."></textarea>
+      </div>
+
+      <div class="editor-actions">
+        <button class="btn" id="saveSchedulerBtn">Save Task</button>
+        <button class="btn btn-secondary" id="cancelSchedulerBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

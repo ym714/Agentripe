@@ -1,0 +1,45 @@
+{
+  "name": "valley-agent",
+  "version": "1.0.0",
+  "description": "Valley Agent - AI Agent Server with Web UI, Scheduler, and Claude Code Integration",
+  "type": "module",
+  "bin": {
+    "valley-agent": "./bin/valley-agent.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "bin/",
+    "dist/",
+    "client/"
+  ],
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun --watch run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target node --format esm",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "claude",
+    "anthropic",
+    "scheduler",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.1.28"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.0.0"
+  }
+}

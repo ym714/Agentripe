@@ -1,22 +1,32 @@
-import { createApp } from "../src/app";
+import express from 'express';
+import cors from 'cors';
 
-// Cache the app instance for re-use
-let appPromise: Promise<any> | null = null;
+const app = express();
 
-export default async function handler(req: any, res: any) {
-    try {
-        if (!appPromise) {
-            console.log("Initializing app...");
-            appPromise = createApp();
-        }
-        const app = await appPromise;
-        app(req, res);
-    } catch (error) {
-        console.error("Critical error in serverless function:", error);
-        res.status(500).json({
-            error: "Internal Server Error",
-            details: error instanceof Error ? error.message : String(error),
-            stack: error instanceof Error ? error.stack : undefined
-        });
-    }
-}
+// Configure CORS
+app.use(cors({
+    origin: [
+        'http://localhost:3000',
+        'https://agentripe.vercel.app',
+        'https://agentripe-8ot3.vercel.app'
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X402-Payment', 'X402-Redeem-Token']
+}));
+
+app.use(express.json());
+
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok', message: 'Express + CORS is working!' });
+});
+
+app.post('/demo/execute', (req, res) => {
+    res.json({
+        message: 'Demo endpoint working!',
+        body: req.body,
+        timestamp: new Date().toISOString()
+    });
+});
+
+export default app;

@@ -9,6 +9,7 @@ export function middleware(request: NextRequest) {
     default-src 'self';
     script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.basescan.org https://*.walletconnect.com https://vercel.live https://*.vercel-analytics.com;
     child-src 'self';
+    frame-src 'self' https://vercel.live;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     img-src 'self' data: https://*.basescan.org https://*.walletconnect.com blob:;
     font-src 'self' https://fonts.gstatic.com;

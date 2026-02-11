@@ -1,4 +1,4 @@
-import type { IPaymentGateway } from "../../application/ports/IPaymentGateway";
+import type { IPaymentGateway } from "../../application/ports/IPaymentGateway.js";
 import { x402ResourceServer } from "@x402/core/server";
 import type { FacilitatorClient, ResourceConfig, ResourceInfo } from "@x402/core/server";
 import type {

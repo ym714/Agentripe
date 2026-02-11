@@ -1,6 +1,6 @@
 import type { PrismaClient } from "@prisma/client";
-import type { IRedeemTokenRepository } from "../../../domain/repositories/IRedeemTokenRepository";
-import { RedeemToken, RedeemTokenStatus } from "../../../domain/entities/RedeemToken";
+import type { IRedeemTokenRepository } from "../../../domain/repositories/IRedeemTokenRepository.js";
+import { RedeemToken, RedeemTokenStatus } from "../../../domain/entities/RedeemToken.js";
 
 export class PrismaRedeemTokenRepository implements IRedeemTokenRepository {
   constructor(private readonly prisma: PrismaClient) {}

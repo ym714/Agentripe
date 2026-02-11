@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express";
-import type { ProcessX402Request } from "../../application/usecases/ProcessX402Request";
-import type { IPaymentGateway } from "../../application/ports/IPaymentGateway";
+import type { ProcessX402Request } from "../../application/usecases/ProcessX402Request.js";
+import type { IPaymentGateway } from "../../application/ports/IPaymentGateway.js";
 
 export function createX402Routes(
   processX402Request: ProcessX402Request,

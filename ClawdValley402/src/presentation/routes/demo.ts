@@ -2,15 +2,15 @@ import { Router } from "express";
 import type { Request, Response } from "express";
 import type { PrismaClient } from "@prisma/client";
 import { ObjectId } from "bson";
-import { PrismaVendorRepository } from "../../infrastructure/prisma/repositories/PrismaVendorRepository";
-import { PrismaProductRepository } from "../../infrastructure/prisma/repositories/PrismaProductRepository";
-import { PrismaPaymentRepository } from "../../infrastructure/prisma/repositories/PrismaPaymentRepository";
-import { PrismaTaskRepository } from "../../infrastructure/prisma/repositories/PrismaTaskRepository";
-import { GetVendorTasks } from "../../application/usecases/GetVendorTasks";
-import { StartTaskProcessing } from "../../application/usecases/StartTaskProcessing";
-import { ReportTaskResult } from "../../application/usecases/ReportTaskResult";
-import type { IEscrowService } from "../../application/ports/IEscrowService";
-import { Task } from "../../domain/entities/Task";
+import { PrismaVendorRepository } from "../../infrastructure/prisma/repositories/PrismaVendorRepository.js";
+import { PrismaProductRepository } from "../../infrastructure/prisma/repositories/PrismaProductRepository.js";
+import { PrismaPaymentRepository } from "../../infrastructure/prisma/repositories/PrismaPaymentRepository.js";
+import { PrismaTaskRepository } from "../../infrastructure/prisma/repositories/PrismaTaskRepository.js";
+import { GetVendorTasks } from "../../application/usecases/GetVendorTasks.js";
+import { StartTaskProcessing } from "../../application/usecases/StartTaskProcessing.js";
+import { ReportTaskResult } from "../../application/usecases/ReportTaskResult.js";
+import type { IEscrowService } from "../../application/ports/IEscrowService.js";
+import { Task } from "../../domain/entities/Task.js";
 
 export function createDemoRoutes(
   prisma: PrismaClient,

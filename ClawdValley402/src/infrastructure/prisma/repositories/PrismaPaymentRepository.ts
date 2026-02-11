@@ -1,6 +1,6 @@
 import type { PrismaClient, Payment as PrismaPayment } from "@prisma/client";
-import { Payment, PaymentStatus } from "../../../domain/entities/Payment";
-import type { IPaymentRepository } from "../../../domain/repositories/IPaymentRepository";
+import { Payment, PaymentStatus } from "../../../domain/entities/Payment.js";
+import type { IPaymentRepository } from "../../../domain/repositories/IPaymentRepository.js";
 
 export class PrismaPaymentRepository implements IPaymentRepository {
   constructor(private readonly prisma: PrismaClient) {}

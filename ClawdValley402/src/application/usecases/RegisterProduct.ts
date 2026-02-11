@@ -1,6 +1,6 @@
-import { Product, ProductType } from "../../domain/entities/Product";
-import type { IProductRepository } from "../../domain/repositories/IProductRepository";
-import type { IVendorRepository } from "../../domain/repositories/IVendorRepository";
+import { Product, ProductType } from "../../domain/entities/Product.js";
+import type { IProductRepository } from "../../domain/repositories/IProductRepository.js";
+import type { IVendorRepository } from "../../domain/repositories/IVendorRepository.js";
 
 export interface RegisterProductInput {
   vendorId: string;

@@ -1,4 +1,4 @@
-import type { Payment, PaymentStatus } from "../entities/Payment";
+import type { Payment, PaymentStatus } from "../entities/Payment.js";
 
 export interface IPaymentRepository {
   save(payment: Payment): Promise<void>;

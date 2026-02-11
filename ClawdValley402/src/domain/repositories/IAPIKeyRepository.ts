@@ -1,4 +1,4 @@
-import type { APIKey } from "../entities/APIKey";
+import type { APIKey } from "../entities/APIKey.js";
 
 export interface IAPIKeyRepository {
   save(apiKey: APIKey): Promise<APIKey>;

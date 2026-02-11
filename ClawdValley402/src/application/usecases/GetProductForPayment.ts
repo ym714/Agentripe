@@ -1,7 +1,7 @@
-import { Product } from "../../domain/entities/Product";
-import { Vendor } from "../../domain/entities/Vendor";
-import type { IProductRepository } from "../../domain/repositories/IProductRepository";
-import type { IVendorRepository } from "../../domain/repositories/IVendorRepository";
+import { Product } from "../../domain/entities/Product.js";
+import { Vendor } from "../../domain/entities/Vendor.js";
+import type { IProductRepository } from "../../domain/repositories/IProductRepository.js";
+import type { IVendorRepository } from "../../domain/repositories/IVendorRepository.js";
 
 export interface GetProductForPaymentInput {
   vendorId: string;

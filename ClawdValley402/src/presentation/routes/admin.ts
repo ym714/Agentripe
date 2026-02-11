@@ -1,7 +1,7 @@
 import { Router } from "express";
 import type { Request, Response } from "express";
-import type { RegisterVendor } from "../../application/usecases/RegisterVendor";
-import type { RegisterProduct } from "../../application/usecases/RegisterProduct";
+import type { RegisterVendor } from "../../application/usecases/RegisterVendor.js";
+import type { RegisterProduct } from "../../application/usecases/RegisterProduct.js";
 
 export function createAdminRoutes(
   registerVendor: RegisterVendor,

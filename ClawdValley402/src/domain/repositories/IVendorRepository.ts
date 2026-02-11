@@ -1,4 +1,4 @@
-import { Vendor } from "../entities/Vendor";
+import { Vendor } from "../entities/Vendor.js";
 
 export interface IVendorRepository {
   save(vendor: Vendor): Promise<Vendor>;

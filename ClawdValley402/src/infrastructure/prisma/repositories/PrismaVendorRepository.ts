@@ -1,6 +1,6 @@
 import type { PrismaClient } from "@prisma/client";
-import { Vendor, VendorStatus } from "../../../domain/entities/Vendor";
-import type { IVendorRepository } from "../../../domain/repositories/IVendorRepository";
+import { Vendor, VendorStatus } from "../../../domain/entities/Vendor.js";
+import type { IVendorRepository } from "../../../domain/repositories/IVendorRepository.js";
 
 export class PrismaVendorRepository implements IVendorRepository {
   constructor(private readonly prisma: PrismaClient) {}

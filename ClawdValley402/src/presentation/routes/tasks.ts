@@ -1,8 +1,8 @@
 import { Router } from "express";
 import type { Request, Response } from "express";
-import type { GetTaskStatus } from "../../application/usecases/GetTaskStatus";
-import type { GetTaskResult } from "../../application/usecases/GetTaskResult";
-import { TaskStatus } from "../../domain/entities/Task";
+import type { GetTaskStatus } from "../../application/usecases/GetTaskStatus.js";
+import type { GetTaskResult } from "../../application/usecases/GetTaskResult.js";
+import { TaskStatus } from "../../domain/entities/Task.js";
 
 export function createTasksRoutes(
   getTaskStatus: GetTaskStatus,

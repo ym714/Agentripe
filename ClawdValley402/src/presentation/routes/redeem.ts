@@ -1,5 +1,5 @@
 import { Router } from "express";
-import type { RedeemAPIKey } from "../../application/usecases/RedeemAPIKey";
+import type { RedeemAPIKey } from "../../application/usecases/RedeemAPIKey.js";
 
 export function createRedeemRoutes(redeemAPIKey: RedeemAPIKey): Router {
   const router = Router();

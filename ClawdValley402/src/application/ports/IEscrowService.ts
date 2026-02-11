@@ -1,4 +1,4 @@
-import type { Payment } from "../../domain/entities/Payment";
+import type { Payment } from "../../domain/entities/Payment.js";
 
 export interface EscrowResult {
   success: boolean;

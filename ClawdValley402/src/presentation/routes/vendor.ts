@@ -1,9 +1,9 @@
 import { Router } from "express";
 import type { Response } from "express";
-import type { GetVendorTasks } from "../../application/usecases/GetVendorTasks";
-import type { StartTaskProcessing } from "../../application/usecases/StartTaskProcessing";
-import type { ReportTaskResult } from "../../application/usecases/ReportTaskResult";
-import type { AuthenticatedRequest } from "../middleware/vendorAuth";
+import type { GetVendorTasks } from "../../application/usecases/GetVendorTasks.js";
+import type { StartTaskProcessing } from "../../application/usecases/StartTaskProcessing.js";
+import type { ReportTaskResult } from "../../application/usecases/ReportTaskResult.js";
+import type { AuthenticatedRequest } from "../middleware/vendorAuth.js";
 
 export function createVendorRoutes(
   getVendorTasks: GetVendorTasks,

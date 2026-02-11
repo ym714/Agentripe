@@ -1,6 +1,6 @@
 import type { PrismaClient } from "@prisma/client";
-import type { IAPIKeyRepository } from "../../../domain/repositories/IAPIKeyRepository";
-import { APIKey, APIKeyStatus } from "../../../domain/entities/APIKey";
+import type { IAPIKeyRepository } from "../../../domain/repositories/IAPIKeyRepository.js";
+import { APIKey, APIKeyStatus } from "../../../domain/entities/APIKey.js";
 
 export class PrismaAPIKeyRepository implements IAPIKeyRepository {
   constructor(private readonly prisma: PrismaClient) {}

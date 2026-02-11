@@ -1,4 +1,4 @@
-import { Product } from "../entities/Product";
+import { Product } from "../entities/Product.js";
 
 export interface IProductRepository {
   save(product: Product): Promise<Product>;

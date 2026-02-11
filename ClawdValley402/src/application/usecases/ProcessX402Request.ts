@@ -1,13 +1,13 @@
-import type { IProductRepository } from "../../domain/repositories/IProductRepository";
-import type { IVendorRepository } from "../../domain/repositories/IVendorRepository";
-import type { IPaymentRepository } from "../../domain/repositories/IPaymentRepository";
-import type { ITaskRepository } from "../../domain/repositories/ITaskRepository";
-import type { IPaymentGateway } from "../ports/IPaymentGateway";
-import type { IEscrowService } from "../ports/IEscrowService";
-import type { CreateRedeemToken } from "./CreateRedeemToken";
-import type { Product } from "../../domain/entities/Product";
-import { Payment } from "../../domain/entities/Payment";
-import { Task } from "../../domain/entities/Task";
+import type { IProductRepository } from "../../domain/repositories/IProductRepository.js";
+import type { IVendorRepository } from "../../domain/repositories/IVendorRepository.js";
+import type { IPaymentRepository } from "../../domain/repositories/IPaymentRepository.js";
+import type { ITaskRepository } from "../../domain/repositories/ITaskRepository.js";
+import type { IPaymentGateway } from "../ports/IPaymentGateway.js";
+import type { IEscrowService } from "../ports/IEscrowService.js";
+import type { CreateRedeemToken } from "./CreateRedeemToken.js";.js";
+import type { Product } from "../../domain/entities/Product.js";
+import { Payment } from "../../domain/entities/Payment.js";
+import { Task } from "../../domain/entities/Task.js";
 import type { PaymentRequired, SettleResponse, Network } from "@x402/core/types";
 
 const ESCROW_TIMEOUT_MS = 7 * 24 * 60 * 60 * 1000;

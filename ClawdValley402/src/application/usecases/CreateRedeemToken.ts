@@ -1,5 +1,5 @@
-import { RedeemToken } from "../../domain/entities/RedeemToken";
-import type { IRedeemTokenRepository } from "../../domain/repositories/IRedeemTokenRepository";
+import { RedeemToken } from "../../domain/entities/RedeemToken.js";
+import type { IRedeemTokenRepository } from "../../domain/repositories/IRedeemTokenRepository.js";
 
 export interface CreateRedeemTokenInput {
   vendorId: string;

@@ -9,8 +9,8 @@ import {
 } from "viem";
 import { privateKeyToAccount, type LocalAccount } from "viem/accounts";
 import { baseSepolia } from "viem/chains";
-import type { IEscrowService, EscrowResult } from "../../application/ports/IEscrowService";
-import { Payment, PaymentStatus } from "../../domain/entities/Payment";
+import type { IEscrowService, EscrowResult } from "../../application/ports/IEscrowService.js";
+import { Payment, PaymentStatus } from "../../domain/entities/Payment.js";
 
 const ERC20_ABI = [
   {

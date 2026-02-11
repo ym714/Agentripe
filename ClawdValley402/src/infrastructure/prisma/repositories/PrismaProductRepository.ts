@@ -1,6 +1,6 @@
 import type { PrismaClient, Product as PrismaProduct } from "@prisma/client";
-import { Product, ProductStatus, ProductType } from "../../../domain/entities/Product";
-import type { IProductRepository } from "../../../domain/repositories/IProductRepository";
+import { Product, ProductStatus, ProductType } from "../../../domain/entities/Product.js";
+import type { IProductRepository } from "../../../domain/repositories/IProductRepository.js";
 
 export class PrismaProductRepository implements IProductRepository {
   constructor(private readonly prisma: PrismaClient) {}

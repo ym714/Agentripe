@@ -1,6 +1,6 @@
-import { APIKey } from "../../domain/entities/APIKey";
-import type { IAPIKeyRepository } from "../../domain/repositories/IAPIKeyRepository";
-import type { IRedeemTokenRepository } from "../../domain/repositories/IRedeemTokenRepository";
+import { APIKey } from "../../domain/entities/APIKey.js";
+import type { IAPIKeyRepository } from "../../domain/repositories/IAPIKeyRepository.js";
+import type { IRedeemTokenRepository } from "../../domain/repositories/IRedeemTokenRepository.js";
 
 export interface RedeemAPIKeyInput {
   token: string;

@@ -1,6 +1,6 @@
 import type { PrismaClient, Task as PrismaTask } from "@prisma/client";
-import { Task, TaskStatus } from "../../../domain/entities/Task";
-import type { ITaskRepository } from "../../../domain/repositories/ITaskRepository";
+import { Task, TaskStatus } from "../../../domain/entities/Task.js";
+import type { ITaskRepository } from "../../../domain/repositories/ITaskRepository.js";
 
 export class PrismaTaskRepository implements ITaskRepository {
   constructor(private readonly prisma: PrismaClient) {}

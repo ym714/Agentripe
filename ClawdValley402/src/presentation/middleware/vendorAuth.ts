@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction, RequestHandler } from "express";
-import type { IVendorRepository } from "../../domain/repositories/IVendorRepository";
-import type { IAPIKeyRepository } from "../../domain/repositories/IAPIKeyRepository";
-import type { Vendor } from "../../domain/entities/Vendor";
+import type { IVendorRepository } from "../../domain/repositories/IVendorRepository.js";
+import type { IAPIKeyRepository } from "../../domain/repositories/IAPIKeyRepository.js";
+import type { Vendor } from "../../domain/entities/Vendor.js";
 
 export interface AuthenticatedRequest extends Request {
   vendor: Vendor;

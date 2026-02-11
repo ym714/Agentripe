@@ -1,9 +1,9 @@
-import type { ITaskRepository } from "../../domain/repositories/ITaskRepository";
-import type { IPaymentRepository } from "../../domain/repositories/IPaymentRepository";
-import type { IVendorRepository } from "../../domain/repositories/IVendorRepository";
-import type { IEscrowService } from "../ports/IEscrowService";
-import type { Task } from "../../domain/entities/Task";
-import { PaymentStatus } from "../../domain/entities/Payment";
+import type { ITaskRepository } from "../../domain/repositories/ITaskRepository.js";
+import type { IPaymentRepository } from "../../domain/repositories/IPaymentRepository.js";
+import type { IVendorRepository } from "../../domain/repositories/IVendorRepository.js";
+import type { IEscrowService } from "../ports/IEscrowService.js";
+import type { Task } from "../../domain/entities/Task.js";
+import { PaymentStatus } from "../../domain/entities/Payment.js";
 
 export interface CompleteTaskInput {
   taskId: string;

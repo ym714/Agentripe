@@ -1,5 +1,5 @@
-import type { ITaskRepository } from "../../domain/repositories/ITaskRepository";
-import type { Task } from "../../domain/entities/Task";
+import type { ITaskRepository } from "../../domain/repositories/ITaskRepository.js";
+import type { Task } from "../../domain/entities/Task.js";
 
 export interface StartTaskProcessingInput {
   taskId: string;

@@ -1,5 +1,5 @@
-import { APIKey } from "../../domain/entities/APIKey";
-import type { IAPIKeyRepository } from "../../domain/repositories/IAPIKeyRepository";
+import { APIKey } from "../../domain/entities/APIKey.js";
+import type { IAPIKeyRepository } from "../../domain/repositories/IAPIKeyRepository.js";
 
 export interface CreateAPIKeyInput {
   vendorId: string;

@@ -15,8 +15,20 @@ const mockVendor = {
 };
 
 // Mock tasks
+interface VendorTask {
+  id: string;
+  productId: string;
+  buyerAddress: string;
+  buyerShort: string;
+  status: string;
+  payment: string;
+  createdAt: string;
+  requestPayload?: string;
+  result?: string;
+}
+
 const useMockTasks = () => {
-  const [tasks, setTasks] = useState([
+  const [tasks, setTasks] = useState<VendorTask[]>([
     {
       id: '42',
       productId: '1',
@@ -55,6 +67,7 @@ const useMockTasks = () => {
           { severity: 'medium', line: 23, issue: 'Unused variable' },
         ],
       }),
+      requestPayload: undefined
     },
   ]);
 
@@ -63,25 +76,25 @@ const useMockTasks = () => {
       prev.map(task =>
         task.id === taskId
           ? {
-              ...task,
-              status: 'completed',
-              result: JSON.stringify({
-                analysis: {
-                  summary: 'Code review completed',
-                  issues: [
-                    {
-                      severity: 'high',
-                      line: 1,
-                      issue: 'SQL Injection vulnerability detected',
-                      recommendation: 'Use parameterized queries',
-                    },
-                  ],
-                },
-                metrics: {
-                  timeTaken: '1.8s',
-                },
-              }),
-            }
+            ...task,
+            status: 'completed',
+            result: JSON.stringify({
+              analysis: {
+                summary: 'Code review completed',
+                issues: [
+                  {
+                    severity: 'high',
+                    line: 1,
+                    issue: 'SQL Injection vulnerability detected',
+                    recommendation: 'Use parameterized queries',
+                  },
+                ],
+              },
+              metrics: {
+                timeTaken: '1.8s',
+              },
+            }),
+          }
           : task
       )
     );

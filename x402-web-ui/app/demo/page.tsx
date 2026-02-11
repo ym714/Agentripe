@@ -373,7 +373,7 @@ export default function DemoPage() {
     });
 
     try {
-      const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
+      const BACKEND_URL = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001').replace(/\/$/, '');
       const VENDOR_ID = process.env.NEXT_PUBLIC_VENDOR_ID || '698b4032551f1cca82f790e3';
       const PRODUCT_PATH = process.env.NEXT_PUBLIC_PRODUCT_PATH || 'market-analysis';
 
@@ -548,7 +548,7 @@ export default function DemoPage() {
     setVisualCard(null);
 
     try {
-      const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
+      const BACKEND_URL = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001').replace(/\/$/, '');
       const VENDOR_ID = process.env.NEXT_PUBLIC_VENDOR_ID || '698b4032551f1cca82f790e3';
       const PRODUCT_PATH = process.env.NEXT_PUBLIC_PRODUCT_PATH || 'market-analysis';
 

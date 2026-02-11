@@ -4,18 +4,6 @@ import { createApp } from "../src/app.js";
 let appPromise: Promise<any> | null = null;
 
 export default async function handler(req: any, res: any) {
-    // Set CORS headers for all responses
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X402-Payment, X402-Redeem-Token');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-    // Handle OPTIONS preflight request
-    if (req.method === 'OPTIONS') {
-        res.status(200).end();
-        return;
-    }
-
     try {
         if (!appPromise) {
             console.log("Initializing app...");

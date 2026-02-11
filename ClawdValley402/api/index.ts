@@ -1,11 +1,9 @@
-// Vercel serverless function handler
-// Uses TypeScript compilation via @vercel/node
-const { createApp } = require("../src/app");
+import { createApp } from "../src/app";
 
-// Cache the app instance for re-use across invocations
-let appPromise = null;
+// Cache the app instance for re-use
+let appPromise: Promise<any> | null = null;
 
-module.exports = async function handler(req, res) {
+export default async function handler(req: any, res: any) {
     try {
         if (!appPromise) {
             console.log("Initializing app...");
@@ -20,4 +18,4 @@ module.exports = async function handler(req, res) {
             details: error instanceof Error ? error.message : String(error)
         });
     }
-};
+}

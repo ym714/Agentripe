@@ -7,7 +7,7 @@ import {
   type WalletClient,
   type PublicClient,
 } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
+import { privateKeyToAccount, type LocalAccount } from "viem/accounts";
 import { baseSepolia } from "viem/chains";
 import type { IEscrowService, EscrowResult } from "../../application/ports/IEscrowService";
 import { Payment, PaymentStatus } from "../../domain/entities/Payment";
@@ -37,6 +37,7 @@ export class EvmEscrowService implements IEscrowService {
   private readonly publicClient: PublicClient;
   private readonly escrowAddress: Address;
   private readonly usdcAddress: Address;
+  private readonly account: LocalAccount;
 
   constructor(
     privateKey: string,
@@ -44,6 +45,7 @@ export class EvmEscrowService implements IEscrowService {
     rpcUrl?: string
   ) {
     const account = privateKeyToAccount(privateKey as `0x${string}`);
+    this.account = account;
     this.escrowAddress = account.address;
     this.usdcAddress = usdcAddress as Address;
 
@@ -85,6 +87,7 @@ export class EvmEscrowService implements IEscrowService {
         functionName: "transfer",
         args: [vendorAddress as Address, amount],
         chain: baseSepolia,
+        account: this.account,
       });
 
       await this.publicClient.waitForTransactionReceipt({ hash });
@@ -118,6 +121,7 @@ export class EvmEscrowService implements IEscrowService {
         functionName: "transfer",
         args: [payment.payer as Address, amount],
         chain: baseSepolia,
+        account: this.account,
       });
 
       await this.publicClient.waitForTransactionReceipt({ hash });

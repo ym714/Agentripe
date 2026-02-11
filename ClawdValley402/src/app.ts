@@ -52,23 +52,32 @@ export async function createApp() {
     const paymentGateway = new X402PaymentGateway(facilitatorClient);
 
     // Note: Initializing payment gateway might need to be optimized for serverless if it makes heavy network calls
-    await paymentGateway.initialize();
+    try {
+        await paymentGateway.initialize();
+    } catch (error) {
+        console.warn("Failed to initialize Payment Gateway:", error);
+        // We continue, as it might be a temporary network issue or configuration error
+    }
 
     const redeemTokenExpiryHours = parseInt(process.env.REDEEM_TOKEN_EXPIRY_HOURS ?? "24", 10);
     const createRedeemToken = new CreateRedeemToken(redeemTokenRepository, redeemTokenExpiryHours);
     const redeemAPIKey = new RedeemAPIKey(redeemTokenRepository, apiKeyRepository);
 
     const escrowPrivateKey = process.env.ESCROW_PRIVATE_KEY;
-    const escrowService = escrowPrivateKey
-        ? new EvmEscrowService(
-            escrowPrivateKey,
-            process.env.USDC_CONTRACT_ADDRESS,
-            process.env.RPC_URL
-        )
-        : undefined;
+    let escrowService: EvmEscrowService | undefined;
 
-    if (escrowService) {
-        console.log(`Escrow wallet address: ${escrowService.getEscrowAddress()}`);
+    if (escrowPrivateKey) {
+        try {
+            escrowService = new EvmEscrowService(
+                escrowPrivateKey,
+                process.env.USDC_CONTRACT_ADDRESS,
+                process.env.RPC_URL
+            );
+            console.log(`Escrow wallet address: ${escrowService.getEscrowAddress()}`);
+        } catch (error) {
+            console.error("Failed to initialize Escrow Service:", error);
+            // We continue without escrow service if initialization fails
+        }
     }
 
     const processX402Request = new ProcessX402Request(

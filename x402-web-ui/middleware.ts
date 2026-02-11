@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     img-src 'self' data: https://*.basescan.org https://*.walletconnect.com blob:;
     font-src 'self' https://fonts.gstatic.com;
-    connect-src 'self' http://localhost:3001 https://*.basescan.org https://sepolia.base.org https://*.walletconnect.com https://*.vercel-analytics.com https://vitals.vercel-analytics.com https://*.alchemy.com https://*.g.alchemy.com;
+    connect-src 'self' http://localhost:3001 https://*.basescan.org https://sepolia.base.org https://*.walletconnect.com https://*.vercel-analytics.com https://vitals.vercel-analytics.com https://*.alchemy.com https://*.g.alchemy.com https://*.vercel.app;
   `;
 
   response.headers.set('Content-Security-Policy', cspHeader.replace(/\s{2,}/g, ' ').trim());

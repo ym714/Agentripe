@@ -458,17 +458,24 @@ export default function DemoPage() {
         usdcMoving: false,
       });
 
-      const response = await fetch(`${BACKEND_URL}/demo/execute`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          vendorId: VENDOR_ID,
-          productPath: PRODUCT_PATH,
-        }),
-      });
+      let result;
+      // In simulation mode (low balance), we mock the backend call too
+      if (Number(agentBalance.usdc) < 0.1 || Number(agentBalance.eth) < 0.000001) {
+        await sleep(1500); // Simulate network latency
+        result = { taskId: '603c...mock' };
+      } else {
+        const response = await fetch(`${BACKEND_URL}/demo/execute`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            vendorId: VENDOR_ID,
+            productPath: PRODUCT_PATH,
+          }),
+        });
 
-      if (!response.ok) throw new Error('Failed to create task');
-      const result = await response.json();
+        if (!response.ok) throw new Error('Failed to create task');
+        result = await response.json();
+      }
 
       addLog(setBuyerLogs, `✓ Task created: ${result.taskId.slice(0, 8)}...`, 'success');
       setSellerState('processing');

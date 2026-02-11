@@ -58,7 +58,7 @@ export class EvmEscrowService implements IEscrowService {
     this.publicClient = createPublicClient({
       chain: baseSepolia,
       transport,
-    });
+    }) as unknown as PublicClient;
   }
 
   getEscrowAddress(): string {
@@ -84,6 +84,7 @@ export class EvmEscrowService implements IEscrowService {
         abi: ERC20_ABI,
         functionName: "transfer",
         args: [vendorAddress as Address, amount],
+        chain: baseSepolia,
       });
 
       await this.publicClient.waitForTransactionReceipt({ hash });
@@ -116,6 +117,7 @@ export class EvmEscrowService implements IEscrowService {
         abi: ERC20_ABI,
         functionName: "transfer",
         args: [payment.payer as Address, amount],
+        chain: baseSepolia,
       });
 
       await this.publicClient.waitForTransactionReceipt({ hash });

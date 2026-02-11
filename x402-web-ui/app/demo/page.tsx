@@ -369,7 +369,7 @@ export default function DemoPage() {
     const agentClient = createWalletClient({
       account: agentAccount,
       chain: baseSepolia,
-      transport: http()
+      transport: http(process.env.NEXT_PUBLIC_RPC_URL)
     });
 
     try {

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target node --format esm",
     "test": "bun test tests/",
     "test:integration": "bun test tests/integration/ --timeout 60000",
     "permit2:approve": "bun run tests/integration/scripts/permit2-approve.ts",

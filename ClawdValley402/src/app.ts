@@ -38,7 +38,7 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 export async function createApp() {
     const vendorRepository = new PrismaVendorRepository(prisma);
-    const productRepository = new PrismaProductRepository(prisma, vendorRepository);
+    const productRepository = new PrismaProductRepository(prisma);
     const paymentRepository = new PrismaPaymentRepository(prisma);
     const taskRepository = new PrismaTaskRepository(prisma);
     const apiKeyRepository = new PrismaAPIKeyRepository(prisma);

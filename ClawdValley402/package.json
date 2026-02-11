@@ -12,7 +12,8 @@
     "permit2:approve": "bun run tests/integration/scripts/permit2-approve.ts",
     "typecheck": "tsc --noEmit",
     "db:push": "bunx prisma db push",
-    "db:generate": "bunx prisma generate"
+    "db:generate": "bunx prisma generate",
+    "postinstall": "prisma generate"
   },
   "devDependencies": {
     "@types/bun": "latest",

@@ -9,7 +9,24 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "/api/index.ts"
+            "method": "OPTIONS",
+            "dest": "/api/index.ts",
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization, X402-Payment, X402-Redeem-Token",
+                "Access-Control-Allow-Credentials": "true"
+            }
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.ts",
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization, X402-Payment, X402-Redeem-Token",
+                "Access-Control-Allow-Credentials": "true"
+            }
         }
     ]
 }

@@ -10,44 +10,40 @@ export function createTasksRoutes(
 ): Router {
   const router = Router();
 
-  router.get("/:taskId", async (req: Request, res: Response) => {
-    const taskId = req.params.taskId;
-    const result = await getTaskStatus.execute({ taskId });
+  router.get("/status", async (req: Request, res: Response) => {
+    try {
+      const taskId = req.query.taskId as string;
 
-    if (!result.found) {
-      res.status(404).json({ error: "Task not found" });
-      return;
+      if (!taskId) {
+        res.status(400).json({ error: "Task ID is required" });
+        return;
+      }
+
+      const result = await getTaskStatus.execute({ taskId });
+      res.json(result);
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
     }
-
-    res.json({
-      status: result.status,
-      createdAt: result.createdAt,
-      updatedAt: result.updatedAt,
-    });
   });
 
-  router.get("/:taskId/result", async (req: Request, res: Response) => {
-    const taskId = req.params.taskId;
-    const result = await getTaskResult.execute({ taskId });
+  router.get("/result", async (req: Request, res: Response) => {
+    try {
+      const taskId = req.query.taskId as string;
 
-    if (!result.found) {
-      res.status(404).json({ error: "Task not found" });
-      return;
-    }
+      if (!taskId) {
+        res.status(400).json({ error: "Task ID is required" });
+        return;
+      }
 
-    if (result.status === TaskStatus.PENDING || result.status === TaskStatus.PROCESSING) {
-      res.status(202).json({
+      const result = await getTaskResult.execute({ taskId });
+      res.json({
         status: result.status,
-        message: "Task is still processing",
+        result: result.result,
+        errorMessage: result.errorMessage,
       });
-      return;
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
     }
-
-    res.json({
-      status: result.status,
-      result: result.result,
-      errorMessage: result.errorMessage,
-    });
   });
 
   return router;

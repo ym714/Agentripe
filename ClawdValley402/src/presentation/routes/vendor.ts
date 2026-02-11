@@ -13,7 +13,7 @@ export function createVendorRoutes(
   const router = Router();
 
   router.get("/tasks", async (req, res: Response) => {
-    const vendor = (req as AuthenticatedRequest).vendor;
+    const vendor = (req as unknown as AuthenticatedRequest).vendor;
     const result = await getVendorTasks.execute({ vendorId: vendor.id });
 
     res.json({
@@ -29,7 +29,7 @@ export function createVendorRoutes(
   });
 
   router.post("/tasks/:taskId/start", async (req, res: Response) => {
-    const vendor = (req as AuthenticatedRequest).vendor;
+    const vendor = (req as unknown as AuthenticatedRequest).vendor;
     const taskId = req.params.taskId;
 
     const result = await startTaskProcessing.execute({
@@ -52,7 +52,7 @@ export function createVendorRoutes(
   });
 
   router.post("/tasks/:taskId/complete", async (req, res: Response) => {
-    const vendor = (req as AuthenticatedRequest).vendor;
+    const vendor = (req as unknown as AuthenticatedRequest).vendor;
     const taskId = req.params.taskId;
     const { result: taskResult } = req.body;
 
@@ -77,7 +77,7 @@ export function createVendorRoutes(
   });
 
   router.post("/tasks/:taskId/fail", async (req, res: Response) => {
-    const vendor = (req as AuthenticatedRequest).vendor;
+    const vendor = (req as unknown as AuthenticatedRequest).vendor;
     const taskId = req.params.taskId;
     const { errorMessage } = req.body;
 

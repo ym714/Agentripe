@@ -32,7 +32,7 @@ export function createDemoRoutes(
       }
 
       const vendorRepository = new PrismaVendorRepository(prisma);
-      const productRepository = new PrismaProductRepository(prisma, vendorRepository);
+      const productRepository = new PrismaProductRepository(prisma);
       const paymentRepository = new PrismaPaymentRepository(prisma);
       const taskRepository = new PrismaTaskRepository(prisma);
 
@@ -72,7 +72,7 @@ export function createDemoRoutes(
       await taskRepository.save(task);
 
       // Start task processing
-      await startTaskProcessing.execute({ taskId: task.id });
+      await startTaskProcessing.execute({ vendorId: vendorId, taskId: task.id });
 
       // Simulate processing delay
       await new Promise(resolve => setTimeout(resolve, 2000));
@@ -91,11 +91,14 @@ export function createDemoRoutes(
         },
       };
 
-      await reportTaskResult.complete({
-        taskId: task.id,
-        vendorId: vendorId,
-        result: JSON.stringify(analysisResult),
-      });
+      // Report result
+      if (escrowService) {
+        await reportTaskResult.complete({
+          vendorId: vendorId,
+          taskId: task.id,
+          result: JSON.stringify(analysisResult) // Keeping original result format
+        });
+      }
 
       res.json({
         success: true,

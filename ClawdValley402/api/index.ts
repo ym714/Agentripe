@@ -1,32 +1,24 @@
-import express from 'express';
-import cors from 'cors';
+// ESM export for Vercel
+export const config = {
+  runtime: 'nodejs20'
+};
 
-const app = express();
+// Simple test handler
+export default async function handler(req: any, res: any) {
+  // Handle CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-// Configure CORS
-app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'https://agentripe.vercel.app',
-        'https://agentripe-8ot3.vercel.app'
-    ],
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X402-Payment', 'X402-Redeem-Token']
-}));
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
 
-app.use(express.json());
-
-app.get('/health', (req, res) => {
-    res.json({ status: 'ok', message: 'Express + CORS is working!' });
-});
-
-app.post('/demo/execute', (req, res) => {
-    res.json({
-        message: 'Demo endpoint working!',
-        body: req.body,
-        timestamp: new Date().toISOString()
-    });
-});
-
-export default app;
+  res.status(200).json({
+    message: 'Handler is working!',
+    method: req.method,
+    url: req.url,
+    timestamp: new Date().toISOString()
+  });
+}
